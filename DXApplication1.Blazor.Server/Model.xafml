@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Options UIType="TabbedMDI"
+         RestoreTabbedMdiLayout="True"
+         ShowTabImage="True">
+  </Options>
+  <NavigationItems NavigationStyle="Accordion">
+  </NavigationItems>
+<Views>
+	<ListView Id="Employee_ListView" DataAccessMode="Server">
+		<Columns>
+			<ColumnInfo Id="FullName" MinWidth="130" />
+		</Columns>
+	</ListView>
+</Views>
+</Application>
