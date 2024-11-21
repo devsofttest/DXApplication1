@@ -1,12 +1,10 @@
 ﻿.pagination
 {
-    display:flex;
-    flex:1;
-    flex-direction:row;
-
+    display:inline-block;
 }
 .pagination.btn{
-    color:red;
+    height:20px;
+    width:50px
 }
 .active{
     background-color:blue;

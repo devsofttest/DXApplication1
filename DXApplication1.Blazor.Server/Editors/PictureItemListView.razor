@@ -1,0 +1,62 @@
+﻿@using DXApplication1.Module.BusinessObjects
+@using System.ComponentModel
+@using System.Collections
+@using DevExpress.Data
+@if (Data is not null)
+{
+
+    <div style="margin-bottom:20px">
+        <DXApplication1.Blazor.Server.Pages.Pagination AllRecordCounts="AllRecordCounts" OnPageSelection="SelectPage"></DXApplication1.Blazor.Server.Pages.Pagination>
+    </div>
+    <hr />
+
+    <div class="row">
+        @for (int counter = Skip; counter < ToRecord; counter++)
+        {
+            {
+                Record = listServer[counter];
+            }
+
+            <div class="col-auto" style="cursor: pointer;"
+                 @onclick=@(async () => await ItemClick.InvokeAsync((PictureItem)Record))>
+                @if (((PictureItem)Record).Image is null)
+                {
+                    <div class="border d-flex justify-content-center align-items-center"
+                         style="height:150px; width: 104px;">
+                        No image
+                    </div>
+                }
+                else
+                {
+                    <img src="data:image/png;base64,@Convert.ToBase64String(((PictureItem)Record).Image)" alt=@((PictureItem)Record).Text
+                         style="height:150px; width: 104px;">
+                }
+                <div class="text-center" style="width: 104px;">
+                    @((PictureItem)Record).Text
+                </div>
+            </div>
+        } 
+    </div>
+}
+
+@code {
+    [Parameter]
+    public  IListSource Data { get; set; }
+    [Parameter]
+    public EventCallback<IPictureItem> ItemClick { get; set; }
+
+
+    private object Record { get; set; }  
+    private PropertyDescriptorCollection properties => ((ITypedList)List)?.GetItemProperties(null);
+    private string FullName => (string)properties["Text"].GetValue(Record);
+    private IList List => ((IListSource)Data).GetList();
+    private IListServer listServer => List as IListServer;
+
+    private int AllRecordCounts  => listServer.Count; 
+    private int Skip{ get; set; }
+    private int ToRecord { get; set; }
+    private void SelectPage(int[] info){
+    Skip = info[0] * info[1];
+    ToRecord = Skip + info[1];
+   }
+}

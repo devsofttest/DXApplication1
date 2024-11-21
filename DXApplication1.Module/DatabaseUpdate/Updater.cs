@@ -18,9 +18,14 @@ public class Updater : ModuleUpdater {
     {
         base.UpdateDatabaseAfterUpdateSchema();
         Employee theObject = ObjectSpace.FirstOrDefault<Employee>(x => x.FullName == "Employee 0");
+        PictureItem theImage = ObjectSpace.FirstOrDefault<PictureItem>(x => x.Text == "Image 0");
         if (theObject == null)
         {
             CreateEmployee();
+        }
+        if (theImage == null)
+        {
+            CreateImages();
         }
         ObjectSpace.CommitChanges();
     }
@@ -31,6 +36,14 @@ public class Updater : ModuleUpdater {
         {
             var emp = ObjectSpace.CreateObject<Employee>();
             emp.FullName = $"Employee {i}";
+        }
+    }
+    public void CreateImages()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            var img  = ObjectSpace.CreateObject<PictureItem>();
+            img.Text = $"Image {i}";
         }
     }
     public override void UpdateDatabaseBeforeUpdateSchema() {

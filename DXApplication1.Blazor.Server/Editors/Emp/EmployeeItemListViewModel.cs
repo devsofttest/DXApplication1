@@ -3,11 +3,11 @@ using DevExpress.ExpressApp.Blazor.Components.Models;
 using DXApplication1.Module.BusinessObjects;
 using Microsoft.AspNetCore.Components;
 
-namespace DXApplication1.Blazor.Server.Editors
+namespace DXApplication1.Blazor.Server.Editors.Emp
 {
     public class EmployeeItemListViewModel : ComponentModelBase
     {
-        public  IListSource Data
+        public IListSource Data
         {
             get => GetPropertyValue<IListSource>();
             set => SetPropertyValue(value);
@@ -17,7 +17,7 @@ namespace DXApplication1.Blazor.Server.Editors
             get => GetPropertyValue<EventCallback<Employee>>();
             set => SetPropertyValue(value);
         }
-         
+
         public override Type ComponentType => typeof(CustomEmployeeListView);
     }
 }

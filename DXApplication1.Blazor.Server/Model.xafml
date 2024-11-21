@@ -12,5 +12,10 @@
 			<ColumnInfo Id="FullName" MinWidth="130" />
 		</Columns>
 	</ListView>
+	<ListView Id="PictureItem_ListView" DataAccessMode="Server">
+		<Columns>
+			<ColumnInfo Id="Text" MinWidth="130" />
+		</Columns>
+	</ListView>
 </Views>
 </Application>

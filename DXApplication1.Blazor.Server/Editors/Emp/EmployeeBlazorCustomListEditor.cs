@@ -1,23 +1,27 @@
-﻿using DevExpress.ExpressApp.Blazor.Components.Models;
-using DevExpress.ExpressApp.Blazor.Components;
-using DevExpress.ExpressApp.Model;
-using Microsoft.AspNetCore.Components;
+﻿using DevExpress.ExpressApp.Blazor.Components;
 using DevExpress.ExpressApp.Blazor;
 using DevExpress.ExpressApp.Editors;
+using DevExpress.ExpressApp.Model;
+using Microsoft.AspNetCore.Components;
 using DXApplication1.Module.BusinessObjects;
+using DevExpress.ExpressApp.Blazor.Components.Models;
 using DevExpress.ExpressApp;
 using System.Collections;
 using System.ComponentModel;
+using DevExpress.Data.Filtering;
+using DevExpress.Data;
+using System.Security.AccessControl;
 
-namespace DXApplication1.Blazor.Server.Editors
+
+namespace DXApplication1.Blazor.Server.Editors.Emp
 {
-    [ListEditor(typeof(IPictureItem))]
-    public class BlazorCustomListEditor : ListEditor, IComponentContentHolder
+    [ListEditor(typeof(Employee))]
+    public class EmployeeBlazorCustomListEditor : ListEditor, IComponentContentHolder
     {
         private RenderFragment _componentContent;
-        private IPictureItem[] selectedObjects = Array.Empty<IPictureItem>();
+        private Employee[] selectedObjects = Array.Empty<Employee>();
 
-        public PictureItemListViewModel ComponentModel { get; private set; }
+        public EmployeeItemListViewModel ComponentModel { get; private set; }
         public RenderFragment ComponentContent
         {
             get
@@ -27,7 +31,7 @@ namespace DXApplication1.Blazor.Server.Editors
             }
         }
 
-        public BlazorCustomListEditor(IModelListView model) : base(model) { }
+        public EmployeeBlazorCustomListEditor(IModelListView model) : base(model) { }
 
         private void BindingList_ListChanged(object sender, ListChangedEventArgs e)
         {
@@ -44,9 +48,10 @@ namespace DXApplication1.Blazor.Server.Editors
 
         protected override object CreateControlsCore()
         {
-            ComponentModel = new PictureItemListViewModel();
-            ComponentModel.ItemClick = EventCallback.Factory.Create<IPictureItem>(this, (item) => {
-                selectedObjects = new IPictureItem[] { item };
+            ComponentModel = new EmployeeItemListViewModel();
+            ComponentModel.ItemClick = EventCallback.Factory.Create<Employee>(this, (item) =>
+            {
+                selectedObjects = new Employee[] { item };
                 OnSelectionChanged();
                 OnProcessSelectedItem();
             });

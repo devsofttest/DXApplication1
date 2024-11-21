@@ -9,8 +9,10 @@ using DevExpress.Persistent.BaseImpl.EF;
 namespace DXApplication1.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    public class Employee:BaseObject
+    public class PictureItem : BaseObject, IPictureItem
     {
-        public virtual string FullName { get; set; }
+        [ImageEditor]
+        public virtual byte[] Image { get; set; }
+        public virtual string Text { get; set; }
     }
 }

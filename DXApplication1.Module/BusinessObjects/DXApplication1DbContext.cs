@@ -34,7 +34,8 @@ public class DXApplication1DesignTimeDbContextFactory : IDesignTimeDbContextFact
 public class DXApplication1EFCoreDbContext : DbContext {
     public DXApplication1EFCoreDbContext(DbContextOptions<DXApplication1EFCoreDbContext> options) : base(options) {
     }
-     public DbSet<Employee> Employees { get; set; } 
+     public DbSet<Employee> Employees { get; set; }
+     public DbSet<PictureItem> PictureItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
