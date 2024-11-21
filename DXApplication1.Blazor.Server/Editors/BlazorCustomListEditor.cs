@@ -42,32 +42,7 @@ namespace DXApplication1.Blazor.Server.Editors
         {
             if (ComponentModel is not null)
             {
-                IList list = ((IListSource)dataSource).GetList();
-                IListServer listServer = list as IListServer;
-                //listServer.Apply(CriteriaOperator.Parse("StartsWith(FirstName, 'B')"), null, 0, null, null);
-
-                // IListServer.Count() query the number of filtered records on the server.
-                // With this approach, the objects is not to be loaded on the client.
-                int count = listServer.Count;
-
-                // Since the data source may contain DataViewRecord instead of real objects,
-                // and the data records may contain computed properties that do not exist in real object,
-                // you must use PropertyDescriptors to access the values stored in each data record.
-                PropertyDescriptorCollection properties = ((ITypedList)list).GetItemProperties(null);
-                // Iterate over the objects in the data source.
-                // If a ServerMode source is used, this method will load data in batches (i.e. not all at once)  as you need to access it.
-                List<Employee> employees = new List<Employee>();    
-                for (int i = 0; i < count; i++)
-                {
-                    // Get object record from data source.
-                    // Depending on which data source is used, it can be either an actual Employee object or a DataViewRecord structure.
-                    Employee record = (Employee)listServer[i];
-                    employees.Add(record);
-                    // reading object properties via PropertyDescriptors
-                    //string firstName = (string)properties["FirstName"].GetValue(record);
-                    //string lastName = (string)properties["LastName"].GetValue(record);
-                }
-                ComponentModel.Data = employees.AsEnumerable();// (dataSource as IEnumerable)?.OfType<Employee>().OrderBy(i => i.FullName);
+                ComponentModel.Data = (IListSource)dataSource ;
             }
         }
 

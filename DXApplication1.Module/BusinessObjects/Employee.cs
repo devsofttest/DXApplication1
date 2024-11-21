@@ -9,8 +9,9 @@ using DevExpress.Persistent.BaseImpl.EF;
 namespace DXApplication1.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    public class Employee:BaseObject
+    public class Employee
     {
+        public virtual int ID { get; set; }
         public virtual    string FullName { get; set; }
 
     }

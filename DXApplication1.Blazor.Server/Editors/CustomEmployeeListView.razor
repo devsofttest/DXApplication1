@@ -1,28 +1,46 @@
 ﻿@using DXApplication1.Module.BusinessObjects;
 @using DevExpress.Data
+@using DevExpress.Data.Filtering
 @using Microsoft.AspNetCore.Components.Web
 @using System.Collections
 @using System.ComponentModel
 
 @if (Data  is not null)
 { 
+    <div class="row">
+        <button @onclick="@(e => Filter(1,50))">Record [1-50]</button>
+        <button @onclick="@(e => Filter(51,100))">Record [51-100]</button>
+        @for (int i = 0; i < @count; i++)
+        {
+            setRecord(@listServer[i]);
+            <div class="col-auto" style="cursor: pointer;"
+            @onclick=@(async () => await ItemClick.InvokeAsync(@employee))>
 
-          <div class="row">
-        @foreach (var item in Data)
-        {     
-                    <div class="col-auto" style="cursor: pointer;"    
-                        @onclick=@(async () => await ItemClick.InvokeAsync(item))>    
-                        <div class="text-center" style="width: 104px;">    
-                            @item.FullName    
-                        </div>    
-                    </div>    
-                }    
-          </div>  
-    }
-    @code {
-        [Parameter]
-        public IEnumerable<Employee> Data  { get; set; }
-        [Parameter]
-        public EventCallback<Employee> ItemClick { get; set; }
+                <div class="text-center" style="width: 104px;">
+                    @fullName 
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public IListSource  Data  { get; set; }
+    [Parameter]
+    public EventCallback<Employee> ItemClick { get; set; } 
+    private object record;
+    private Employee employee => (Employee)record;
+    private PropertyDescriptorCollection properties => ((ITypedList)list)?.GetItemProperties(null);
+    private string fullName => (string)properties["FullName"].GetValue(record);
+    private IList list => ((IListSource)Data).GetList();
+    private IListServer listServer => list as IListServer; 
+    private int count => listServer.Count;
+    private int pages =>count/20;
+    private void setRecord(object _record){
+        record = _record;
+    } 
+    private void Filter(int  start,int end){
+        listServer.Apply(new BetweenOperator("ID",start,end) , null, 0, null, null);
     }
 }

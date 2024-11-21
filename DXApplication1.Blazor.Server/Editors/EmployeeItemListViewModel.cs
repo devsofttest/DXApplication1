@@ -7,9 +7,9 @@ namespace DXApplication1.Blazor.Server.Editors
 {
     public class EmployeeItemListViewModel : ComponentModelBase
     {
-        public IEnumerable<Employee> Data
+        public  IListSource Data
         {
-            get => GetPropertyValue<IEnumerable<Employee>>();
+            get => GetPropertyValue<IListSource>();
             set => SetPropertyValue(value);
         }
         public EventCallback<Employee> ItemClick
