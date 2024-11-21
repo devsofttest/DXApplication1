@@ -1,0 +1,14 @@
+﻿.pagination
+{
+    display:flex;
+    flex:1;
+    flex-direction:row;
+
+}
+.pagination.btn{
+    color:red;
+}
+.active{
+    background-color:blue;
+    color:white;
+}

@@ -8,8 +8,11 @@
 @if (Data  is not null)
 { 
     <div class="row">
-        <DXApplication1.Blazor.Server.Pages.Pagination TotalPages="TotalPages" OnPageSelection="SelectPage"></DXApplication1.Blazor.Server.Pages.Pagination>
-        @for (int counter = Skip; counter < Skip+RecordPerPage; counter++)
+        <DXApplication1.Blazor.Server.Pages.Pagination AllRecordCounts="AllRecordCounts" OnPageSelection="SelectPage"></DXApplication1.Blazor.Server.Pages.Pagination>
+    </div>
+    <div class="row">
+
+        @for (int counter = Skip; counter < ToRecord; counter++)
         {
             {
                 Record=listServer[counter];
@@ -35,11 +38,13 @@
     private string FullName => (string)properties["FullName"].GetValue(Record);
     private IList List => ((IListSource)Data).GetList();
     private IListServer listServer => List as IListServer;
-    private int AllRecordCounts  => listServer.Count;
-    private int RecordPerPage = 20;
-    private int TotalPages => AllRecordCounts / RecordPerPage;
-    private int Skip{ get; set; } 
-    private void SelectPage(int page){
-        Skip = page * RecordPerPage;
+    
+    private int AllRecordCounts  => listServer.Count; 
+    private int Skip{ get; set; }
+    private int ToRecord { get; set; }
+    private void SelectPage(int[] info){
+        var RecordPerPage = info[1];
+        Skip = info[0]  * RecordPerPage;
+        ToRecord = Skip + RecordPerPage;
     }
 }

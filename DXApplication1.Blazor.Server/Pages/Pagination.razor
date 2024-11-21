@@ -1,18 +1,30 @@
-﻿<div class="pagination-btn">
-@for (int i = 1; i <=TotalPages; i++)
-{
-        <button class="btn"
-                @onclick="(e => SelectPage(i))">Page @i</button>
-}
+﻿<div class="pagination">
+    @foreach (var pageNumber in Enumerable.Range(0, TotalPages))
+    {
+        <button @onclick="() => SelectPage(pageNumber)" 
+        class="btn @(CurrentPage == pageNumber ? "active" : "")">
+            Page  @(pageNumber+1)
+        </button>
+    }
+
 </div>
 @code {
+
     [Parameter]
-    public int TotalPages{ get; set; }
+    public EventCallback<int[]> OnPageSelection { get; set; }
     [Parameter]
-    public EventCallback<int> OnPageSelection { get; set; }
-    public int CurrentPage{ get; set; }
+    public int AllRecordCounts { get; set; }
+    private int RecordPerPage = 20;
+    private int TotalPages => AllRecordCounts / RecordPerPage;
+    public int CurrentPage { get; set; } = 0;
     private async  void SelectPage(int page){
         CurrentPage = page;
-        await OnPageSelection.InvokeAsync(page);
+        await OnPageSelection.InvokeAsync([page, RecordPerPage]);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        SelectPage(CurrentPage);
     }
 }
