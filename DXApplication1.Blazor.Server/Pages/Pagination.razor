@@ -1,0 +1,18 @@
+﻿<div class="pagination-btn">
+@for (int i = 1; i <=TotalPages; i++)
+{
+        <button class="btn"
+                @onclick="(e => SelectPage(i))">Page @i</button>
+}
+</div>
+@code {
+    [Parameter]
+    public int TotalPages{ get; set; }
+    [Parameter]
+    public EventCallback<int> OnPageSelection { get; set; }
+    public int CurrentPage{ get; set; }
+    private async  void SelectPage(int page){
+        CurrentPage = page;
+        await OnPageSelection.InvokeAsync(page);
+    }
+}
